@@ -5,6 +5,8 @@ const bodyParser = require("body-parser");
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server listening in port ${PORT}`))
+var cors = require('cors')
+app.use(cors());
 app.use(bodyParser.urlencoded({
   extended: false
 }));
@@ -57,6 +59,13 @@ app.get('/v1/hello', (req, res) => res.json({
   "greeting": "Hello it's Abhilash"
 }));
 
-app.post('/v1/auth', (req, res) => res.json({
-  "token": "Hello " + req.body.username
-}));
+app.post('/v1/auth', function (req, res) {
+  if (req.body.username == 'Abhi') {
+    if (req.body.password == 'password') {
+      res.json({
+        "access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFiaGlsYXNoIiwicGFzc3dvcmQiOiJwYXNzd29yZCJ9.QEEzlu1LZbcQpRKrgorrJX81v_zoyWmO44D8slF-LNU",
+        "expires": new Date()
+      })
+    }
+  }
+});
