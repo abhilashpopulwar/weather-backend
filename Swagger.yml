@@ -1,0 +1,138 @@
+swagger: "2.0"
+info:
+  description: ""
+  version: "1.0.0"
+  title: "CS 561 Assignment 4 (Abhi)"
+host: "localhost:3000"
+basePath: "/v1"
+tags:
+- name: "user"
+  description: "Operations about user"
+schemes:
+- "http"
+paths:
+  /auth:
+    post:
+      tags:
+      - "user"
+      summary: "Authenticate user and return token"
+      consumes:
+        - application/json
+      description: ""
+      operationId: "loginUser"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "The user to login"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        "200":
+          description: "successful operation"
+          examples:
+            application/json:
+              token: a_very_secret_token_for_string
+            
+  /weather:
+    get:
+      tags:
+      - "user"
+      summary: "Returns current temperature"
+      description: ""
+      operationId: "getWeather"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "q"
+        in: "query"
+        description: "City name, state code and country code divided by comma."
+        required: true
+        type: "string"
+      - name: "appid"
+        in: "query"
+        description: "Your unique API key"
+        required: true
+        type: "string"
+      - name: "mode"
+        in: "query"
+        description: "Response format. Possible values are xml and html. (default: JSON)"
+        required: false
+        type: "string"
+      - name: "units"
+        in: "query"
+        description: "Units of measurement. standard, metric and imperial units are available."
+        required: false
+        type: "string"
+      - name: "lang"
+        in: "query"
+        description: "You can use this parameter to get the output in your language."
+        required: false
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          examples:
+            application/json:
+              coord:
+                lon: -123.262
+                lat: 44.5646
+              weather:
+                - id: 804
+                  main: Clouds
+                  description: overcast clouds
+                  icon: 04n
+              base: stations
+              main:
+                temp: 280.21
+                feels_like: 280.21
+                temp_min: 279.18
+                temp_max: 285.07
+                pressure: 1024
+                humidity: 92
+              visibility: 10000
+              wind:
+                speed: 0.45
+                deg: 45
+                gust: 0.45
+              clouds:
+                all: 100
+              dt: 1642283492
+              sys:
+                type: 2
+                id: 2040223
+                country: US
+                sunrise: 1642261568
+                sunset: 1642294710
+              timezone: -28800
+              id: 5720727
+              name: Corvallis
+              cod: 200
+        "400":
+          description: "Invalid q/appid"
+  /hello:
+    get:
+      tags:
+      - "user"
+      summary: "Returns a greeting"
+      description: ""
+      operationId: "getGreeting"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "successful operation"
+          examples:
+            application/json:
+              message: Hello it's Abhilash!
+definitions:
+  User:
+    type: "object"
+    properties:
+      username:
+        type: "string"
+      password:
+        type: "string"
